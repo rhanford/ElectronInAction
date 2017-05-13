@@ -1,4 +1,5 @@
 const parser = new DOMParser();
+const {shell} = require('electron');
 
 const linksSection = document.querySelector('.links');
 const errorMessage = document.querySelector('.error-message');
@@ -32,7 +33,14 @@ function renderLinks() {
     const linkElements = getLinks().map(convertToElement).join('');
     linksSection.innerHTML = linkElements;
 }
-
+function handleError(error, url) {
+    errorMessage.innerHTML = `There was an issue adding "${url}": ${error.message}`.trim();
+    setTimeout(() => errorMessage.innerText = null, 5000);
+}
+function validateResponse(response) {
+    if (response.ok) { return response; }
+    throw new Error(`Status code of ${response.status} ${response.statusText}`);
+}
 newLinkUrl.addEventListener('keyup', () => {
     newLinkSubmit.disabled = !newLinkUrl.validity.valid;
 })
@@ -47,12 +55,20 @@ newLinkForm.addEventListener('submit', (event) =>{
         .then(findTitle)
         .then(title => storeLink(title, url))
         .then(clearForm)
-        .then(renderLinks);
+        .then(renderLinks)
+        .catch(error => handleError(error, url));
 });
 
 clearStorageButton.addEventListener('click', function clearStorage() {
     localStorage.clear();
     linksSection.innerHTML = '';
+});
+
+linksSection.addEventListener('click', (event) => {
+    if (event.target.href) {
+        event.preventDefault();
+        shell.openExternal(event.target.href);
+    }
 });
 
 renderLinks();
