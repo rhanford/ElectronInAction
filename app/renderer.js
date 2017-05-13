@@ -24,6 +24,13 @@ const findTitle = (nodes) => {
 function storeLink(title, url) {
     localStorage.setItem(url, JSON.stringify({ title: title, url: url }));
 }
+function getlinks() {
+    return Object.keys(localStorage)
+            .map(key => JSON.parse(localStorage.getItem(key)));
+}
+function convertToElement(link) {
+    return `<div class="link"><h3>${link.title}</h3><p><a href="${link.url}">${link.url}</a></p></div>`;    
+}
 newLinkForm.addEventListener('submit', (event) =>{
     event.preventDefault();
     const url = newLinkUrl.value;
