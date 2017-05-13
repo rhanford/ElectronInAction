@@ -9,13 +9,23 @@
     </head>
     
     <body>
-        <h1>Hello from Bookmarker app</h1>
+        <h1>BookMarker</h1>
+        <div class="add-new-link"></div>
 
-        <p> <!-- This is a new button -->
-            <button class="alert">Current Directory</button>
-            <script>
-                require('./renderer');
-            </script>
-        </p>
+        <section class="add-new-link">
+            <form class="new-link-form">
+                <input type="url" class="new-link-url" placeholder="URL" required>
+                <input type="submit" class="new-link-submit" value="Submit" disabled>
+            </form>
+        </section>
+
+        <section class="links"></section>
+
+        <section class="controls">
+            <button class="clear-storage">Clear Storage</button>
+        </section>
+        <script>
+            require('./renderer');
+        </script>
     </body>
 </html>
