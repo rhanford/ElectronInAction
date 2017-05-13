@@ -21,6 +21,9 @@ const findTitle = (nodes) => {
     return nodes.querySelector('title').innerText;
 }
 
+function storeLink(title, url) {
+    localStorage.setItem(url, JSON.stringify({ title: title, url: url }));
+}
 newLinkForm.addEventListener('submit', (event) =>{
     event.preventDefault();
     const url = newLinkUrl.value;
@@ -29,4 +32,6 @@ newLinkForm.addEventListener('submit', (event) =>{
         .then(response => response.text())
         .then(parseResponse)
         .then(findTitle)
+        .then(title => storeLink(title, url))
+        .then(clearForm);
 })
