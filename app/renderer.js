@@ -31,6 +31,11 @@ function getlinks() {
 function convertToElement(link) {
     return `<div class="link"><h3>${link.title}</h3><p><a href="${link.url}">${link.url}</a></p></div>`;    
 }
+function renderLinks() {
+    const linkElements = getLinks().map(convertToElement).join('');
+    linksSection.innerHTML = linkElements;
+}
+
 newLinkForm.addEventListener('submit', (event) =>{
     event.preventDefault();
     const url = newLinkUrl.value;
@@ -40,5 +45,11 @@ newLinkForm.addEventListener('submit', (event) =>{
         .then(parseResponse)
         .then(findTitle)
         .then(title => storeLink(title, url))
-        .then(clearForm);
-})
+        .then(clearForm)
+        .then(renderLinks);
+});
+
+clearStorageButton.addEventListener('click', function clearStorage() {
+    localStorage.clear();
+    linksSection.innerHTML = '';
+});
