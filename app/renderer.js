@@ -3,13 +3,10 @@ const parser = new DOMParser();
 const linksSection = document.querySelector('.links');
 const errorMessage = document.querySelector('.error-message');
 const newLinkForm = document.querySelector('.new-link-form');
-const newLinkUrl = document.querySelector('new-link-url');
+const newLinkUrl = document.querySelector('.new-link-url');
 const newLinkSubmit = document.querySelector('.new-link-submit');
-const clearStorageButton = document.querySelector(',clear-storage');
+const clearStorageButton = document.querySelector('.clear-storage');
 
-newLinkUrl.addEventListener('keyup', () => {
-    newLinkUrl.disabled = !newLinkUrl.validity.valid;
-})
 
 const clearForm = () => {
     newLinkUrl.value = null;
@@ -24,7 +21,7 @@ const findTitle = (nodes) => {
 function storeLink(title, url) {
     localStorage.setItem(url, JSON.stringify({ title: title, url: url }));
 }
-function getlinks() {
+function getLinks() {
     return Object.keys(localStorage)
             .map(key => JSON.parse(localStorage.getItem(key)));
 }
@@ -35,6 +32,10 @@ function renderLinks() {
     const linkElements = getLinks().map(convertToElement).join('');
     linksSection.innerHTML = linkElements;
 }
+
+newLinkUrl.addEventListener('keyup', () => {
+    newLinkSubmit.disabled = !newLinkUrl.validity.valid;
+})
 
 newLinkForm.addEventListener('submit', (event) =>{
     event.preventDefault();
@@ -53,3 +54,5 @@ clearStorageButton.addEventListener('click', function clearStorage() {
     localStorage.clear();
     linksSection.innerHTML = '';
 });
+
+renderLinks();
