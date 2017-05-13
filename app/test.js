@@ -34,10 +34,8 @@ function renderLinks() {
     linksSection.innerHTML = linkElements;
 }
 function handleError(error, url) {
-    // if (error !== null) {
     errorMessage.innerHTML = `There was an issue adding "${url}": ${error.message}`.trim();
-    setTimeout(() => errorMessage.innerText = null, 7000);
-    // }
+    setTimeout(() => errorMessage.innerText = null, 5000);
 }
 function validateResponse(response) {
     if (response.ok) { return response; }
