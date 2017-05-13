@@ -1,6 +1,15 @@
+const linksSection = document.querySelector('.links');
+const errorMessage = document.querySelector('.error-message');
+const newLinkForm = document.querySelector('.new-link-form');
+const newLinkUrl = document.querySelector('new-link-url');
+const newLinkSubmit = document.querySelector('.new-link-submit');
+const clearStorageButton = document.querySelector(',clear-storage');
 
-const button2 = document.querySelector('.alert');
+newLinkUrl.addEventListener('keyup', () => {
+    newLinkUrl.disabled = !newLinkUrl.validity.valid;
+})
 
-button2.addEventListener('click', () => {
-    alert(__dirname);
-});
+const clearForm = () => {
+    newLinkUrl.value = null;
+}
+
